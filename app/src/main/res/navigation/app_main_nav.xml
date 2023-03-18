@@ -19,5 +19,15 @@
         android:id="@+id/homeFragment"
         android:name="com.project.flashcardapp.home.presentation.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_flashCardFragment"
+            app:destination="@id/flashCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashCardFragment"
+        android:name="com.project.flashcardapp.home.presentation.FlashCardFragment"
+        android:label="FlashCardFragment"
+        tools:layout="@layout/fragment_flash_card"
+        />
 </navigation>
