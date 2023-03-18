@@ -23,11 +23,31 @@
         <action
             android:id="@+id/action_homeFragment_to_flashCardFragment"
             app:destination="@id/flashCardFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/flashCardFragment"
         android:name="com.project.flashcardapp.home.presentation.FlashCardFragment"
         android:label="FlashCardFragment"
         tools:layout="@layout/fragment_flash_card"
-        />
+        >
+        <argument
+            android:name="DECK_ID"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_flashCardFragment_to_createFlashCardFragment"
+            app:destination="@id/createFlashCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createFlashCardFragment"
+        android:name="com.project.flashcardapp.home.presentation.CreateFlashCardFragment"
+        android:label="fragment_create_flash_card"
+        tools:layout="@layout/fragment_create_flash_card" >
+        <action
+            android:id="@+id/action_createFlashCardFragment_to_flashCardFragment"
+            app:destination="@id/flashCardFragment" />
+        <argument
+            android:name="DECK_ID"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -30,11 +30,11 @@ public class FlashcardAdapter extends FirestoreRecyclerAdapter<FlashCardModel, F
     @NonNull
     @Override
     public FlashCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.deck_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.flashcard_item,parent,false);
         return  new FlashCardViewHolder(v);
     }
 
-    static class FlashCardViewHolder extends RecyclerView.ViewHolder
+     class FlashCardViewHolder extends RecyclerView.ViewHolder
     {
 
         TextView txt_ques, txt_reviewDate, txt_status;

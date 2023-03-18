@@ -14,7 +14,7 @@ public class DeckRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "DeckRepository";
     public static final String DECK = "deck";
-    public static final String FLASHCARD = "flashcard";
+
     public static final String USERS = "users";
     private String email;
     public DeckRepository() {
