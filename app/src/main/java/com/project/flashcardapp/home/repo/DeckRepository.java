@@ -21,8 +21,16 @@ public class DeckRepository {
     }
 
 
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
     public void createDeck(DeckModel deck)
     {
+
+
         DocumentReference docRef = db.collection(USERS).document(email).collection(DECK).document();
         deck.setId( docRef.getId());
         docRef.set(deck).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -1,6 +1,7 @@
 package com.project.flashcardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -12,12 +13,21 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.flashcardapp.databinding.ActivityAppMainBinding;
+import com.project.flashcardapp.home.domain.DeckViewModel;
+import com.project.flashcardapp.home.dto.DeckModel;
+import com.project.flashcardapp.home.presentation.CreateDeckDialog;
 
-public class AppMainActivity extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
+
+public class AppMainActivity extends AppCompatActivity implements CreateDeckDialog.DeckDialogInterface {
 
     FirebaseAuth mAuth ;
     private ActivityAppMainBinding binding;
     private NavController navController;
+    private DeckViewModel deckViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +46,8 @@ public class AppMainActivity extends AppCompatActivity {
             return true;
 
         });
+        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+
     }
 
     @Override
@@ -47,5 +59,16 @@ public class AppMainActivity extends AppCompatActivity {
             startActivity(new Intent(AppMainActivity.this, AuthActivity.class));
             finish();
         }
+    }
+
+    @Override
+    public void onTitleSet(String title) {
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        deckViewModel.setEmail(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
+        DeckModel deck = new DeckModel();
+        deck.setName(title);
+        deck.setCount(0);
+        deck.setDate(date);
+        deckViewModel.createDeck(deck);
     }
 }

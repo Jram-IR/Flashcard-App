@@ -1,8 +1,9 @@
-package com.project.flashcardapp.home;
+package com.project.flashcardapp.home.presentation;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.project.flashcardapp.R;
 
 public class CreateDeckDialog extends DialogFragment {
 
+
+    //TODO Change button color
     private DeckDialogInterface listener;
     public static final String UNTITLED = "Untitled";
     private static final String TAG = "CreateDeckDialog";
@@ -36,15 +39,24 @@ public class CreateDeckDialog extends DialogFragment {
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
                     if(edt_title.getText().toString().trim().equals(""))
                     {
-                        listener.catSelectionTitle(UNTITLED);
+                        listener.onTitleSet(UNTITLED);
                     }
                     else {
-                        listener.catSelectionTitle(edt_title.getText().toString());
+                        listener.onTitleSet(edt_title.getText().toString());
                     }
 
                 });
 
-        return builder.create();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.black));
+            }
+        });
+
+        return alertDialog;
 
     }
 
@@ -62,7 +74,7 @@ public class CreateDeckDialog extends DialogFragment {
 
     public interface DeckDialogInterface
     {
-        void catSelectionTitle(String title);
+        void onTitleSet(String title);
     }
 
     @Override

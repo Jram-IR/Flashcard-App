@@ -23,8 +23,8 @@
             android:backgroundTint="@color/off_white"
             android:maxLines="1"
             android:padding="20dp"
-            android:textColor="@color/dark_pink"
-            android:textColorLink="@color/dark_pink"
+            android:textColor="@color/dark_grey"
+            android:textColorLink="@color/dark_grey"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
