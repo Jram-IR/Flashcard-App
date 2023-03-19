@@ -80,6 +80,13 @@ public class QueueFragment extends Fragment implements ReviewAapter.OnCardClickL
 
     @Override
     public void onCardClick(DocumentSnapshot documentSnapshot, int pos) {
-        navController.navigate(R.id.action_queueFragment_to_reviewFragment);
+
+        String ques = Objects.requireNonNull(documentSnapshot.toObject(FlashCardModel.class)).getQuestion();
+        String ans  = Objects.requireNonNull(documentSnapshot.toObject(FlashCardModel.class)).getAnswer();
+        Bundle bundle = new Bundle();
+        bundle.putString("QUES",ques);
+        bundle.putString("ANS",ans);
+        bundle.putString("ID", Objects.requireNonNull(documentSnapshot.toObject(FlashCardModel.class)).getId());
+        navController.navigate(R.id.action_queueFragment_to_reviewFragment,bundle);
     }
 }

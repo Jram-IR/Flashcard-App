@@ -56,8 +56,8 @@ public class AlertReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
         notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
-                .setContentTitle("This notification works")
-                .setContentText("This is sample text")
+                .setContentTitle("New card in queue!")
+                .setContentText("New card added in queue")
                 .setSmallIcon(R.drawable.baseline_add_alert_24)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)

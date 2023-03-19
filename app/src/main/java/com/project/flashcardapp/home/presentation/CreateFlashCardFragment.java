@@ -1,6 +1,7 @@
 package com.project.flashcardapp.home.presentation;
 
 import static com.project.flashcardapp.home.repo.FlashCardRepository.FLASHCARD;
+import static com.project.flashcardapp.queue.repo.ReviewRepository.LEARNING;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -70,8 +71,8 @@ public class CreateFlashCardFragment extends Fragment {
                 FlashCardModel flashCardModel = new FlashCardModel();
                 flashCardModel.setQuestion(question);
                 flashCardModel.setAnswer(answer);
-                flashCardModel.setNextReviewDate("- -");
-                flashCardModel.setReviewStatus("- -");
+                flashCardModel.setNextReviewDate("1");
+                flashCardModel.setReviewStatus(LEARNING);
                 flashCardModel.setDeckId(deckId);
                 flashCardViewModel.createFlashCard(flashCardModel);
                 flashCardModel.setDeckId(deckId);
