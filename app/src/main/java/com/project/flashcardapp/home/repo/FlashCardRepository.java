@@ -20,6 +20,7 @@ public class FlashCardRepository {
 
     private static final String TAG = "FlashCardRepository";
     public static final String FLASHCARD = "flashcard";
+    public static final String QUEUE = "queue";
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth =  FirebaseAuth.getInstance();
     private String email,deckId;
@@ -62,6 +63,31 @@ public class FlashCardRepository {
                         Log.d(TAG, "Flashcard deleted");
                     }
                 });
+    }
+
+    public void addToQueue(FlashCardModel flashCardModel)
+    {
+        email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+
+        DocumentReference docRef = db.collection(USERS).document(email).collection(QUEUE).document();
+        flashCardModel.setId(docRef.getId());
+        docRef.set(flashCardModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Added to queue");
+            }
+        });
+    }
+
+    public void deleteFromQueue(FlashCardModel flashCardModel)
+    {
+        email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+        db.collection(USERS).document(email).collection(QUEUE).document(flashCardModel.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Deleted from queue!");
+            }
+        });
     }
 
 

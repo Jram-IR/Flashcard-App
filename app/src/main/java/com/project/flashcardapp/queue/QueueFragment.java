@@ -1,66 +1,85 @@
 package com.project.flashcardapp.queue;
 
+import static com.project.flashcardapp.home.repo.DeckRepository.USERS;
+import static com.project.flashcardapp.home.repo.FlashCardRepository.QUEUE;
+
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.flashcardapp.R;
+import com.project.flashcardapp.databinding.FragmentQueueBinding;
+import com.project.flashcardapp.home.dto.FlashCardModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link QueueFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class QueueFragment extends Fragment {
+import java.util.Objects;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class QueueFragment extends Fragment implements ReviewAapter.OnCardClickListener {
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ReviewAapter adapter;
+    private static final String TAG = "QueueFragment";
+    private FragmentQueueBinding binding;
+    private NavController navController;
 
     public QueueFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QueueFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static QueueFragment newInstance(String param1, String param2) {
-        QueueFragment fragment = new QueueFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentQueueBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+        setUpRV();
+    }
+
+    private void setUpRV() {
+        if(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()!=null)
+        {
+
+            String email = mAuth.getCurrentUser().getEmail();
+            Log.d(TAG, email);
+            assert email != null;
+            CollectionReference itemRef = db.collection(USERS).document(email).collection(QUEUE);
+            FirestoreRecyclerOptions<FlashCardModel> options = new FirestoreRecyclerOptions.Builder<FlashCardModel>()
+                    .setQuery(itemRef, FlashCardModel.class)
+                    .build();
+            adapter = new ReviewAapter(options);
+            adapter.setOnCardClickListener(this);
+            binding.flashRecyclerView.setAdapter(adapter);
+            binding.flashRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+            binding.flashRecyclerView.setHasFixedSize(true);
+            adapter.startListening();
+
+
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_queue, container, false);
+    public void onCardClick(DocumentSnapshot documentSnapshot, int pos) {
+        navController.navigate(R.id.action_queueFragment_to_reviewFragment);
     }
 }

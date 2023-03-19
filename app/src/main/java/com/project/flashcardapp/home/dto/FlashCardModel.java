@@ -1,8 +1,13 @@
 package com.project.flashcardapp.home.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.firebase.firestore.Exclude;
 
-public class FlashCardModel {
+public class FlashCardModel implements Parcelable {
     private String question="";
     private String nextReviewDate=" ";
     private String reviewStatus=" ";
@@ -12,6 +17,27 @@ public class FlashCardModel {
 
     public FlashCardModel() {
     }
+
+    protected FlashCardModel(Parcel in) {
+        question = in.readString();
+        nextReviewDate = in.readString();
+        reviewStatus = in.readString();
+        answer = in.readString();
+        deckId = in.readString();
+        id = in.readString();
+    }
+
+    public static final Creator<FlashCardModel> CREATOR = new Creator<FlashCardModel>() {
+        @Override
+        public FlashCardModel createFromParcel(Parcel in) {
+            return new FlashCardModel(in);
+        }
+
+        @Override
+        public FlashCardModel[] newArray(int size) {
+            return new FlashCardModel[size];
+        }
+    };
 
     public String getDeckId() {
         return deckId;
@@ -63,5 +89,20 @@ public class FlashCardModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(question);
+        parcel.writeString(nextReviewDate);
+        parcel.writeString(reviewStatus);
+        parcel.writeString(answer);
+        parcel.writeString(deckId);
+        parcel.writeString(id);
     }
 }
