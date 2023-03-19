@@ -1,5 +1,6 @@
 package com.project.flashcardapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -8,6 +9,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +42,7 @@ public class AppMainActivity extends AppCompatActivity implements CreateDeckDial
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_navHost_fragment);
         assert navHostFragment != null;
          navController = navHostFragment.getNavController();
+         setSupportActionBar(binding.toolbar);
         NavigationUI.setupWithNavController(binding.bottomNavigationView,navController);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item->
@@ -59,6 +64,25 @@ public class AppMainActivity extends AppCompatActivity implements CreateDeckDial
             startActivity(new Intent(AppMainActivity.this, AuthActivity.class));
             finish();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.log_out,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.item_logOut)
+        {
+            mAuth.signOut();
+            startActivity(new Intent(AppMainActivity.this,AuthActivity.class));
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

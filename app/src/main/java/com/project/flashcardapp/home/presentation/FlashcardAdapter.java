@@ -23,8 +23,7 @@ public class FlashcardAdapter extends FirestoreRecyclerAdapter<FlashCardModel, F
     @Override
     protected void onBindViewHolder(@NonNull FlashCardViewHolder holder, int position, @NonNull FlashCardModel model) {
         holder.txt_ques.setText(model.getQuestion());
-        holder.txt_reviewDate.setText(model.getNextReviewDate());
-        holder.txt_status.setText(model.getReviewStatus());
+
     }
 
     @NonNull
@@ -37,13 +36,12 @@ public class FlashcardAdapter extends FirestoreRecyclerAdapter<FlashCardModel, F
      class FlashCardViewHolder extends RecyclerView.ViewHolder
     {
 
-        TextView txt_ques, txt_reviewDate, txt_status;
+        TextView txt_ques;
 
         public FlashCardViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_ques = itemView.findViewById(R.id.txtRVCardQuestion);
-            txt_reviewDate = itemView.findViewById(R.id.txtNextReviewDate);
-            txt_status = itemView.findViewById(R.id.txtReviewStatus);
+
         }
     }
 }

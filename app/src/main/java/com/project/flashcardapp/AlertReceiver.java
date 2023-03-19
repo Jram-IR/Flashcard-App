@@ -53,7 +53,7 @@ public class AlertReceiver extends BroadcastReceiver {
     private void showNotification(Context context) {
 
         Intent i = new Intent(context, AppMainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_IMMUTABLE);
         notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
                 .setContentTitle("New card in queue!")

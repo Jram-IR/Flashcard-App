@@ -15,11 +15,6 @@
             app:destination="@id/reviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.project.flashcardapp.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.project.flashcardapp.home.presentation.HomeFragment"
         android:label="fragment_home"

@@ -31,8 +31,8 @@ public class ReviewAapter extends FirestoreRecyclerAdapter<FlashCardModel, Revie
     @Override
     protected void onBindViewHolder(@NonNull FlashCardViewHolder holder, int position, @NonNull FlashCardModel model) {
         holder.txt_ques.setText(model.getQuestion());
-        holder.txt_reviewDate.setText(model.getNextReviewDate());
-        holder.txt_status.setText(model.getReviewStatus());
+//        holder.txt_reviewDate.setText(model.getNextReviewDate());
+//        holder.txt_status.setText(model.getReviewStatus());
     }
 
     @NonNull
@@ -51,8 +51,7 @@ public class ReviewAapter extends FirestoreRecyclerAdapter<FlashCardModel, Revie
         public FlashCardViewHolder(@NonNull View itemView,OnCardClickListener onCardClickListener) {
             super(itemView);
             txt_ques = itemView.findViewById(R.id.txtRVCardQuestion);
-            txt_reviewDate = itemView.findViewById(R.id.txtNextReviewDate);
-            txt_status = itemView.findViewById(R.id.txtReviewStatus);
+
             this.onCardClickListener = onCardClickListener;
             itemView.setOnClickListener(this);
         }

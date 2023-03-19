@@ -32,7 +32,6 @@ private  OnDeckClickListener onDeckClickListener;
     @Override
     protected void onBindViewHolder(@NonNull DeckViewHolder holder, int position, @NonNull DeckModel model) {
             holder.txt_title.setText(model.getName());
-            holder.txt_count.setText("Cards: "+model.getCount());
             holder.txt_date.setText(model.getDate());
     }
 
@@ -47,13 +46,12 @@ private  OnDeckClickListener onDeckClickListener;
 
     class DeckViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView txt_date,txt_count,txt_title;
+        TextView txt_date,txt_title;
         OnDeckClickListener onDeckClickListener;
 
         public DeckViewHolder(@NonNull View itemView,OnDeckClickListener onDeckClickListener) {
             super(itemView);
             txt_title = itemView.findViewById(R.id.edt_deckname_homepage);
-            txt_count = itemView.findViewById(R.id.count);
             txt_date = itemView.findViewById(R.id.dateOfCards);
             this.onDeckClickListener = onDeckClickListener;
             itemView.setOnClickListener(this);

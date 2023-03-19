@@ -87,20 +87,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Number of cards"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/mView"
-                app:layout_constraintEnd_toEndOf="@+id/edt_deckname_homepage"
-                app:layout_constraintStart_toStartOf="@+id/edt_deckname_homepage"
-                app:layout_constraintTop_toBottomOf="@+id/edt_deckname_homepage"
-                app:layout_constraintVertical_bias="1"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:paddingLeft="30dp"/>
+
 
             <View
                 android:id="@+id/mView"

@@ -57,7 +57,7 @@ public class QueueFragment extends Fragment implements ReviewAapter.OnCardClickL
     }
 
     private void setUpRV() {
-        if(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()!=null)
+        if(mAuth.getCurrentUser()!=null)
         {
 
             String email = mAuth.getCurrentUser().getEmail();

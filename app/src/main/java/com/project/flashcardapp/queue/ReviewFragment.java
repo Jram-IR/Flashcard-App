@@ -22,6 +22,7 @@ import com.project.flashcardapp.AlertReceiver;
 import com.project.flashcardapp.R;
 import com.project.flashcardapp.databinding.FragmentReviewBinding;
 import com.project.flashcardapp.home.dto.FlashCardModel;
+import com.project.flashcardapp.home.repo.FlashCardRepository;
 import com.project.flashcardapp.queue.repo.OnTimeInterface;
 import com.project.flashcardapp.queue.repo.ReviewRepository;
 
@@ -39,6 +40,7 @@ private ReviewRepository repo  = new ReviewRepository();
 private AlarmManager alarmManager;
 private PendingIntent pendingIntent;
 private FlashCardModel model;
+private FlashCardRepository repository = new FlashCardRepository();
 private NavController navController;
     public ReviewFragment() {
         // Required empty public constructor
@@ -146,7 +148,7 @@ private NavController navController;
         i.putExtra("DATE",model.getNextReviewDate());
         i.putExtra("STATUS",model.getReviewStatus());
         i.putExtra("DECK_ID",model.getDeckId());
-        pendingIntent = PendingIntent.getBroadcast(requireActivity(),Integer.parseInt(String.valueOf(System.currentTimeMillis()%10000)),i,0);
+        pendingIntent = PendingIntent.getBroadcast(requireActivity(),Integer.parseInt(String.valueOf(System.currentTimeMillis()%10000)),i,PendingIntent.FLAG_IMMUTABLE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pendingIntent);
     }
 
@@ -191,5 +193,6 @@ private NavController navController;
     @Override
     public void onTime() {
         setTimer();
+        repository.deleteFromQueue(model);
     }
 }

@@ -108,7 +108,7 @@ public class CreateFlashCardFragment extends Fragment {
         i.putExtra("DATE",model.getNextReviewDate());
         i.putExtra("STATUS",model.getReviewStatus());
         i.putExtra("DECK_ID",model.getDeckId());
-        pendingIntent = PendingIntent.getBroadcast(requireActivity(),Integer.parseInt(String.valueOf(System.currentTimeMillis()%10000)),i,0);
+        pendingIntent = PendingIntent.getBroadcast(requireActivity(),Integer.parseInt(String.valueOf(System.currentTimeMillis()%10000)),i,PendingIntent.FLAG_IMMUTABLE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pendingIntent);
 
     }
